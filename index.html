@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,
+width=device-width, height=device-height" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="cordova.js"></script>
+
+    <title>Hello, world!</title>
+  </head>
+  <body onload="onLoad()">
+
+        <div class="container-fluid" style="margin-top:20px;">
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-lg btn-block" id="networkCheckBtn" onClick="checkConnection()">Network Check</button>
+            </div>
+            
+        </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.slim.min.js"></script>
+    <script src="js/popper.min.js" ></script>
+    <script src="js/bootstrap.min.js" ></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            console.log('document ready');
+        });    
+    
+        var isOnline = false;
+        var isPhone = false;
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+
+    function onDeviceReady() {
+       $("#networkCheckBtn").click(function(){
+            networkCheck();
+        });
+       
+        alert('Ready!');
+
+        //add event listeners for online/offline if this is an app
+        isPhone = false;
+        if(document.URL.indexOf("http://") == -1) {
+            isPhone = true;
+        }
+        if (isPhone) {
+            document.addEventListener("online", onOnline, false);
+            document.addEventListener("offline", onOffline, false);
+        }else {
+            //this is a pc so it's always online
+            onOnline();
+        }
+    }    
+
+    function nativeAlert(alertText, titleText, OKText) {
+    try {
+        navigator.notification.alert(
+            alertText, //alert message
+            alertDismissed,         // callback
+            titleText,  //alert title
+            OKText                  // buttonName
+        );
+    }catch(e) {
+        alert(alertText);
+    }
+
+}    
+
+    function onOnline() {
+	    isOnline = true;
+    }
+
+    function onOffline() {
+        isOnline = false;
+        console.log("App is offline!");
+    }    
+
+    function onLoad(){
+        isPhone = false;
+        if(document.URL.indexOf("http://") == -1) {
+            isPhone = true;
+        }
+
+        if(isPhone) {
+            document.addEventListener("deviceready", onDeviceReady, false);
+        } else {
+            onDeviceReady();
+        }
+    }        
+
+
+    function networkCheck() {
+        if(isPhone) {
+            //nativeAlert('This is a test', 'test', 'OK');
+
+            var netState = checkConnection();
+
+        }else {
+            alert('you clicked the button');
+        }
+        if (isOnline) {
+            nativeAlert('Network state reports as '+ netState, 'Network State', 'OK');
+        }else {
+            isOnline = true; 
+            nativeAlert('Forcing into online mode. You may receive other errors if the servers cannot be reached during sync.', 'Forced online', 'OK');
+        }
+
+    }
+
+    function checkConnection() {
+        var netState = "";
+        
+        if(!isPhone) {
+            onOnline();
+            console.log('is a pc');
+        }else {
+
+            var networkState = navigator.connection.type;
+
+            var states = {};
+            states[Connection.UNKNOWN]  = 'Unknown connection';
+            states[Connection.ETHERNET] = 'Ethernet connection';
+            states[Connection.WIFI]     = 'WiFi connection';
+            states[Connection.CELL_2G]  = 'Cell 2G connection';
+            states[Connection.CELL_3G]  = 'Cell 3G connection';
+            states[Connection.CELL_4G]  = 'Cell 4G connection';
+            states[Connection.CELL]     = 'Cell generic connection';
+            states[Connection.NONE]     = 'No network connection';
+            netState = networkState + states[networkState];
+
+            if (networkState == Connection.WIFI || networkState == Connection.CELL_3G ||  networkState == Connection.CELL_4G )
+            {
+                onOnline();
+                console.log('we are online');
+                //nativeAlert("we are online", netState, 'OK');
+            }else {
+                //nativeAlert("Detected as offline, net state is detected as "+netState, 'Detected Offline', 'OK');
+                //onOnline();
+            }
+        }
+
+        return netState;
+
+    }    
+    </script>
+
+  </body>
+</html>

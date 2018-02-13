@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        xmlns:android = "http://schemas.android.com/apk/res/android"
+        id        = "com.mytest.dozer"
+        versionCode="1"
+        version   = "1.0">
+
+    <!-- versionCode is optional and Android only  -->
+	<!-- Adding note.  -->
+
+    <name>Cordova Doze Test</name>
+
+    <description>
+        Cordova Doze Test
+    </description>
+
+    <author href="http://www.google.com" email="me@you.com">
+        XXXXXXX
+    </author>
+
+	<gap:platform name="android">
+        <config-file parent="/*" target="AndroidManifest.xml">
+          <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+        </config-file>  
+    </gap:platform>
+
+    <preference name="webviewbounce" value="false" />
+	<preference name="android-minSdkVersion" value="7" />
+	<gap:plugin name="cordova-plugin-device" source="npm" />
+	<gap:plugin name="cordova-plugin-network-information"  source="npm"/>
+	<gap:plugin name="cordova-plugin-dialogs"  source="npm"/>
+	<gap:plugin name="cordova-plugin-statusbar" source="npm"/>
+    <gap:plugin name="cordova-plugin-whitelist" source="npm" />
+
+    <access origin="tel:*" launch-external="yes" />
+    <access origin="mailto:*" launch-external="yes" />
+    <access origin="geo:*" launch-external="yes" />
+    <access origin="maps:*" launch-external="yes" />
+
+
+
+</widget>
