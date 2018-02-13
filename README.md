@@ -10,7 +10,7 @@ Reproduction steps:
 1. Install and launch app on Android Emulator.
 2. Press the "Network Check" button. You should see an alert that says "we are online", plus another alert that states the Network State is 4G, WIFI, etc (based on the network state of the emulator)
 3. From the CLI run the following commands
-..1. adb shell dumpsys deviceidle enable
+⋅⋅1. adb shell dumpsys deviceidle enable
 ..2. adb shell monkey -p com.mytest.dozer -c android.intent.category.LAUNCHER 1 # launch it
 ..3. sleep 10
 ..4. adb shell input keyevent KEYCODE_HOME # send it to the background
