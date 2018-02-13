@@ -136,8 +136,8 @@ width=device-width, height=device-height" />
             if (networkState == Connection.WIFI || networkState == Connection.CELL_3G ||  networkState == Connection.CELL_4G )
             {
                 onOnline();
-                console.log('we are online');
-                //nativeAlert("we are online", netState, 'OK');
+                //console.log('we are online');
+                nativeAlert("we are online", netState, 'OK');
             }else {
                 //nativeAlert("Detected as offline, net state is detected as "+netState, 'Detected Offline', 'OK');
                 //onOnline();
