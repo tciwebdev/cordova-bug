@@ -10,20 +10,22 @@ Reproduction steps:
 1. Install and launch app on Android Emulator.
 2. Press the "Network Check" button. You should see an alert that says "we are online", plus another alert that states the Network State is 4G, WIFI, etc (based on the network state of the emulator)
 3. From the CLI run the following commands
-⋅⋅1. adb shell dumpsys deviceidle enable
-..2. adb shell monkey -p com.mytest.dozer -c android.intent.category.LAUNCHER 1 # launch it
-..3. sleep 10
-..4. adb shell input keyevent KEYCODE_HOME # send it to the background
-..5. sleep 2
-..6. adb shell svc data disable # disable mobile data or do this manually
-..7. sleep 5
-..8. adb shell dumpsys deviceidle force-idle # bring device in deep sleep
-..9. sleep 1
-..10. adb shell svc data enable # re-enable mobile data or do this manually
-..11. sleep 5
-..12. adb shell dumpsys deviceidle unforce # bring device back from deep sleep
-..13. sleep 1
-..14. adb shell monkey -p com.mytest.dozer -c android.intent.category.LAUNCHER 1 # bring app back
+
++ adb shell dumpsys deviceidle enable
++ adb shell monkey -p com.mytest.dozer -c android.intent.category.LAUNCHER 1 # launch it
++ sleep 10
++ adb shell input keyevent KEYCODE_HOME # send it to the background
++ sleep 2
++ adb shell svc data disable # disable mobile data or do this manually
++ sleep 5
++ adb shell dumpsys deviceidle force-idle # bring device in deep sleep
++ sleep 1
++ adb shell svc data enable # re-enable mobile data or do this manually
++ sleep 5
++ adb shell dumpsys deviceidle unforce # bring device back from deep sleep
++ sleep 1
++ adb shell monkey -p com.mytest.dozer -c android.intent.category.LAUNCHER 1 # bring app back
+
 4. Press the "Network Check" button again. You'll get an alert about "Forcing into online mode", and press it again, and the network state will be reported as "noneNo". 
 
 To have the network plugin actually report that the device is online, you have to essentially put the device/emulator in airplane mode and take it back out.
